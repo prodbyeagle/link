@@ -1,15 +1,21 @@
-import {notFound} from "next/navigation"
-import type {Metadata} from "next"
+import { notFound } from "next/navigation"
+import type { Metadata } from "next"
 import UserProfile from "@/components/user-profile"
 import LinkList from "@/components/link-list"
-import {getUserData} from "@/lib/user-data"
+import { getUserData } from "@/lib/user-data"
 
-type Props = {
-    params: { username: string }
+type Params = {
+    username: string;
 }
 
-export async function generateMetadata({params}: Props): Promise<Metadata> {
-    const userData = await getUserData(params.username)
+type Props = {
+    params: Promise<Params>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    // Await params to safely extract the username
+    const { username } = await params;
+    const userData = await getUserData(username);
 
     if (!userData) {
         return {
@@ -24,11 +30,13 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
     }
 }
 
-export default async function UserPage({params}: Props) {
-    const userData = await getUserData(params.username)
+export default async function UserPage({ params }: Props) {
+    // Await params to safely extract the username
+    const { username } = await params;
+    const userData = await getUserData(username);
 
     if (!userData) {
-        notFound()
+        notFound();
     }
 
     return (
@@ -41,10 +49,15 @@ export default async function UserPage({params}: Props) {
             }}
         >
             <div className="w-full max-w-md">
-                <UserProfile userData={userData}/>
-                <LinkList links={userData.links} textColor={userData.theme.textColor} secondaryColor={userData.theme.secondaryColor} backgroundColor={userData.theme.backgroundColor} accentColor={userData.theme.accentColor}/>
+                <UserProfile userData={userData} />
+                <LinkList
+                    links={userData.links}
+                    textColor={userData.theme.textColor}
+                    secondaryColor={userData.theme.secondaryColor}
+                    backgroundColor={userData.theme.backgroundColor}
+                    accentColor={userData.theme.accentColor}
+                />
             </div>
         </div>
     )
 }
-
