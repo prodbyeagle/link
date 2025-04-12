@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 
 import { useTheme } from 'next-themes';
 
-import { hexToRgba } from '@/lib/color';
+import { hexToRgba } from '@/lib/utils';
 
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
