@@ -15,7 +15,7 @@ export const getUserData = cache(async (username: string): Promise<Profile> => {
 	}
 
 	try {
-		const { userProfile } = await import(`../../../public/username/${username}`);
+		const { userProfile } = await import(`../../public/username/${username}`);
 		const profile = userProfile as Profile;
 
 		userProfileCache.set(username, profile);
