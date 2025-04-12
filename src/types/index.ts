@@ -1,4 +1,4 @@
-type SocialPlatform =
+export type SocialPlatform =
 	| 'Github'
 	| 'Instagram'
 	| 'Threads'
@@ -9,7 +9,7 @@ type SocialPlatform =
 	| 'YouTube'
 	| 'LinkedIn';
 
-interface SocialLink {
+export interface SocialLink {
 	icon: SocialPlatform;
 	title: string;
 	description: string;
