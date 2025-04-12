@@ -41,4 +41,3 @@ export const userProfile: Profile = {
 		respectSystemTheme: true,
 	},
 };
-

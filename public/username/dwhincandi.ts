@@ -1,9 +1,5 @@
 import type { Profile } from '@/types';
 
-
-
-
-
 export const userProfile: Profile = {
 	username: 'dwhincandi',
 	displayName: 'DWHIncAndi',
