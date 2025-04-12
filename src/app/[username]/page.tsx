@@ -1,63 +1,75 @@
-import { notFound } from "next/navigation"
-import type { Metadata } from "next"
-import UserProfile from "@/components/user-profile"
-import LinkList from "@/components/link-list"
-import { getUserData } from "@/lib/user-data"
+import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
+import UserProfile from '@/components/user-profile';
+import LinkList from '@/components/link-list';
+import { getUserData } from '@/lib/user-data';
 
 type Params = {
-    username: string;
-}
+	username: string;
+};
 
 type Props = {
-    params: Promise<Params>;
-}
+	params: Promise<Params>;
+};
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    // Await params to safely extract the username
-    const { username } = await params;
-    const userData = await getUserData(username);
+	const { username } = await params;
+	const userData = await getUserData(username);
 
-    if (!userData) {
-        return {
-            title: "User Not Found",
-        }
-    }
+	if (!userData) {
+		return {
+			title: 'User Not Found | EagleLink',
+			description: 'The requested profile could not be found',
+		};
+	}
 
-    return {
-        title: `${userData.username} | EagleLink`,
-        description: userData.bio,
-        icons: userData.avatar
-    }
+	return {
+		title: `${userData.displayName || userData.username} | EagleLink`,
+		description:
+			userData.bio ||
+			`${
+				userData.displayName || userData.username
+			}'s profile on EagleLink`,
+		icons: userData.avatar,
+		openGraph: {
+			images: [userData.avatar],
+			title: userData.displayName || userData.username,
+			description:
+				userData.bio ||
+				`Check out ${
+					userData.displayName || userData.username
+				}'s profile on EagleLink`,
+			type: 'profile',
+		},
+	};
 }
 
 export default async function UserPage({ params }: Props) {
-    // Await params to safely extract the username
-    const { username } = await params;
-    const userData = await getUserData(username);
+	const { username } = await params;
+	const userData = await getUserData(username);
 
-    if (!userData) {
-        notFound();
-    }
+	if (!userData) {
+		notFound();
+	}
 
-    return (
-        <div
-            className="min-h-screen flex flex-col items-center py-8 px-4"
-            style={{
-                backgroundColor: userData.theme.backgroundColor,
-                borderColor: userData.theme.secondaryColor,
-                color: userData.theme.textColor
-            }}
-        >
-            <div className="w-full max-w-md">
-                <UserProfile userData={userData} />
-                <LinkList
-                    links={userData.links}
-                    textColor={userData.theme.textColor}
-                    secondaryColor={userData.theme.secondaryColor}
-                    backgroundColor={userData.theme.backgroundColor}
-                    accentColor={userData.theme.accentColor}
-                />
-            </div>
-        </div>
-    )
+	return (
+		<div
+			className='min-h-screen flex flex-col items-center py-8 px-4 transition-colors duration-300'
+			style={{
+				backgroundColor: userData.theme.backgroundColor,
+				borderColor: userData.theme.secondaryColor,
+				color: userData.theme.textColor,
+			}}>
+			<div className='w-full max-w-md'>
+				<UserProfile userData={userData} />
+				<LinkList
+					links={userData.links}
+					textColor={userData.theme.textColor}
+					secondaryColor={userData.theme.secondaryColor}
+					backgroundColor={userData.theme.backgroundColor}
+					accentColor={userData.theme.accentColor}
+				/>
+			</div>
+		</div>
+	);
 }
