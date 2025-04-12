@@ -1,10 +1,3 @@
-export interface Link {
-	icon: string;
-	title: string;
-	description: string;
-	url: string;
-}
-
 export type SocialPlatform =
 	| 'Github'
 	| 'Instagram'
@@ -23,14 +16,14 @@ export interface SocialLink {
 	url: string;
 }
 
-export interface ThemeColors {
+interface ThemeColors {
 	background: string;
 	secondary: string;
 	text: string;
 	accent: string;
 }
 
-export interface ProfileTheme {
+interface ProfileTheme {
 	light: ThemeColors;
 	dark: ThemeColors;
 	respectSystemTheme: boolean;

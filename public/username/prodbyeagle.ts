@@ -1,6 +1,6 @@
 import type { Profile } from '@/types';
 
-const userProfile: Profile = {
+export const userProfile: Profile = {
 	username: 'prodbyeagle',
 	displayName: 'ProdbyEagle',
 	bio: 'Hobby Frontend Developer from Germany 🇩🇪',
@@ -41,5 +41,3 @@ const userProfile: Profile = {
 		respectSystemTheme: true,
 	},
 };
-
-export default userProfile;

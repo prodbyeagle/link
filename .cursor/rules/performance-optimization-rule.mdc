@@ -11,3 +11,4 @@ globs: **/*.{ts,tsx,js,jsx}
 - Avoid unnecessary re-renders.
 - Lazy load components and images when possible.
 - Use efficient data structures and algorithms.
+- Avoid Implementing Functions when you know they will be unused.
