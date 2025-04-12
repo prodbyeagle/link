@@ -1,28 +1,56 @@
-import fs from 'fs/promises'
-import path from 'path'
-import {UserData} from '@/types/user'
+import { UserData } from '@/types/user';
 
 export async function getUserData(username: string): Promise<UserData | null> {
-    try {
-        const filePath = path.join(process.cwd(), 'public', 'username', `${username}.json`)
-        const fileContents = await fs.readFile(filePath, 'utf8')
-        return JSON.parse(fileContents) as UserData
-    } catch (error) {
-        console.error(`Error fetching user data for ${username}:`, error)
-        return null
-    }
+	try {
+		const origin =
+			typeof window === 'undefined'
+				? process.env.VERCEL_URL
+					? `https://${process.env.VERCEL_URL}`
+					: 'http://localhost:3000'
+				: window.location.origin;
+
+		const response = await fetch(`${origin}/api/users/${username}`, {
+			method: 'GET',
+			cache: 'no-store',
+		});
+
+		if (!response.ok) {
+			throw new Error(
+				`Failed to fetch user data: ${response.statusText}`
+			);
+		}
+
+		return await response.json();
+	} catch (error) {
+		console.error(`Error fetching user data for ${username}:`, error);
+		return null;
+	}
 }
 
 export async function getUsernames(): Promise<string[]> {
-    try {
-        const usersDir = path.join(process.cwd(), 'public', 'username')
-        const files = await fs.readdir(usersDir)
+	try {
+		const origin =
+			typeof window === 'undefined'
+				? process.env.VERCEL_URL
+					? `https://${process.env.VERCEL_URL}`
+					: 'http://localhost:3000'
+				: window.location.origin;
 
-        return files
-            .filter(file => file.endsWith('.json'))
-            .map(file => file.replace(/\.json$/, ''))
-    } catch (error) {
-        console.error('Error fetching usernames:', error)
-        return []
-    }
+		const response = await fetch(`${origin}/api/users`, {
+			method: 'GET',
+			cache: 'no-store',
+		});
+
+		if (!response.ok) {
+			throw new Error(
+				`Failed to fetch usernames: ${response.statusText}`
+			);
+		}
+
+		const data = await response.json();
+		return data.usernames;
+	} catch (error) {
+		console.error('Error fetching usernames:', error);
+		return [];
+	}
 }
