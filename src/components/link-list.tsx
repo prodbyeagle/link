@@ -1,59 +1,154 @@
-import {Card, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
-import type {Link} from "@/types/user"
-import {Browser, GithubLogo, InstagramLogo, ThreadsLogo, XLogo, TwitchLogo, TiktokLogo} from "@phosphor-icons/react/dist/ssr";
-import {Icon} from "@phosphor-icons/react";
-import {hexToRgba} from "@/lib/color";
+'use client';
+
+import { Icon } from '@phosphor-icons/react';
+import {
+	Browser,
+	GithubLogo,
+	InstagramLogo,
+	ThreadsLogo,
+	TiktokLogo,
+	TwitchLogo,
+	XLogo,
+} from '@phosphor-icons/react/dist/ssr';
+
+import { useEffect, useState } from 'react';
+
+import { useTheme } from 'next-themes';
+
+import { hexToRgba } from '@/lib/color';
+
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+
+import type { Link, SocialPlatform } from '@/types';
 
 interface LinkListProps {
-    links: Link[]
-    backgroundColor?: string;
-    textColor?: string;
-    primaryColor?: string;
-    secondaryColor?: string;
-    accentColor?: string;
-    fontFamily?: string;
+	links: Link[];
+	backgroundColor?: string;
+	textColor?: string;
+	secondaryColor?: string;
+	accentColor?: string;
+	darkBackgroundColor?: string;
+	darkTextColor?: string;
+	darkSecondaryColor?: string;
+	darkAccentColor?: string;
+	respectSystemTheme?: boolean;
 }
 
-const iconMap: Record<string, Icon> = {
-    Instagram: InstagramLogo,
-    Github: GithubLogo,
-    Threads: ThreadsLogo,
-    Website: Browser,
-    X: XLogo,
-    Twitch: TwitchLogo,
-    TikTok: TiktokLogo,
+const iconMap: Record<SocialPlatform, Icon> = {
+	Instagram: InstagramLogo,
+	Github: GithubLogo,
+	Threads: ThreadsLogo,
+	Website: Browser,
+	Twitter: XLogo,
+	Twitch: TwitchLogo,
+	TikTok: TiktokLogo,
+	YouTube: Browser,
+	LinkedIn: Browser,
 };
 
-export default function LinkList({ links, accentColor, secondaryColor, textColor }: LinkListProps) {
-    const borderColor = accentColor ? hexToRgba(accentColor, 0.2) : "rgba(255, 255, 255, 0.5)";
+export default function LinkList({
+	links,
+	accentColor,
+	secondaryColor,
+	textColor,
+	darkSecondaryColor,
+	darkTextColor,
+	darkAccentColor,
+	respectSystemTheme = true,
+}: LinkListProps) {
+	const { theme } = useTheme();
+	const [mounted, setMounted] = useState(false);
+	const [currentColors, setCurrentColors] = useState({
+		borderColor: accentColor ? hexToRgba(accentColor, 0.2) : 'rgba(255, 255, 255, 0.5)',
+		secondaryColor: secondaryColor || '#222222',
+		textColor: textColor || '#ffffff',
+	});
 
-    return (
-        <div className="space-y-4 w-full">
-            {links.map((link, index) => {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-expect-error
-                const IconComponent = iconMap[link.icon] || null;
+	useEffect(() => {
+		setMounted(true);
 
-                return (
-                    <a
-                        key={index}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block w-full transition-transform hover:scale-[1.01] focus:scale-[1.01]"
-                    >
-                        <Card className="w-full hover:shadow-2xl transition-shadow duration-300" style={{ borderColor, backgroundColor: secondaryColor }}>
-                            <CardHeader>
-                                <div className="flex items-center space-x-2">
-                                    {IconComponent && <IconComponent style={{ color: textColor }} size={20} weight="regular" />} {/* Render icon if found */}
-                                    <CardTitle style={{ color: textColor }}>{link.title}</CardTitle>
-                                </div>
-                                <CardDescription>{link.description}</CardDescription>
-                            </CardHeader>
-                        </Card>
-                    </a>
-                );
-            })}
-        </div>
-    );
+		if (!respectSystemTheme) {
+			return;
+		}
+
+		if (theme === 'dark' && darkAccentColor && darkSecondaryColor && darkTextColor) {
+			setCurrentColors({
+				borderColor: hexToRgba(darkAccentColor, 0.2),
+				secondaryColor: darkSecondaryColor,
+				textColor: darkTextColor,
+			});
+		} else {
+			setCurrentColors({
+				borderColor: accentColor ? hexToRgba(accentColor, 0.2) : 'rgba(255, 255, 255, 0.5)',
+				secondaryColor: secondaryColor || '#222222',
+				textColor: textColor || '#ffffff',
+			});
+		}
+	}, [
+		theme,
+		accentColor,
+		secondaryColor,
+		textColor,
+		darkAccentColor,
+		darkSecondaryColor,
+		darkTextColor,
+		respectSystemTheme,
+	]);
+
+	if (!mounted) {
+		return (
+			<div className="space-y-4 w-full">
+				{[1, 2, 3].map((i) => (
+					<div key={i} className="w-full h-16 bg-muted rounded-lg animate-pulse"></div>
+				))}
+			</div>
+		);
+	}
+
+	return (
+		<div className="space-y-4 w-full">
+			{links.map((link, index) => {
+				const IconComponent = iconMap[link.icon as SocialPlatform] || null;
+
+				return (
+					<a key={index} href={link.url} target="_blank" rel="noopener noreferrer" className="block w-full">
+						<Card
+							className="w-full hover:shadow-xl hover:translate-y-[-2px] active:translate-y-[1px] transition-all duration-300"
+							style={{
+								borderColor: currentColors.borderColor,
+								backgroundColor: currentColors.secondaryColor,
+							}}>
+							<CardHeader>
+								<div className="flex items-center space-x-2">
+									{IconComponent && (
+										<div className="flex items-center justify-center w-6 h-6">
+											<IconComponent
+												style={{
+													color: currentColors.textColor,
+												}}
+												size={20}
+												weight="regular"
+											/>
+										</div>
+									)}
+									<CardTitle
+										style={{
+											color: currentColors.textColor,
+										}}>
+										{link.title}
+									</CardTitle>
+								</div>
+								<CardDescription
+									style={{
+										color: hexToRgba(currentColors.textColor || '#ffffff', 0.7),
+									}}>
+									{link.description}
+								</CardDescription>
+							</CardHeader>
+						</Card>
+					</a>
+				);
+			})}
+		</div>
+	);
 }
