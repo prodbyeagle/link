@@ -19,10 +19,10 @@ import { hexToRgba } from '@/lib/utils';
 
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
-import type { Link, SocialPlatform } from '@/types';
+import type { SocialLink, SocialPlatform } from '@/types';
 
 interface LinkListProps {
-	links: Link[];
+	links: SocialLink[];
 	backgroundColor?: string;
 	textColor?: string;
 	secondaryColor?: string;

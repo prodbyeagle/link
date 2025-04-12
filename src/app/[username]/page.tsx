@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
 
-import { getUserData } from '@/lib/user-data';
+import { getUserData } from '@/lib/api/user-service';
 
 import LinkList from '@/components/link-list';
 import ThemeAwareProfile from '@/components/theme-aware-profile';
@@ -18,36 +17,33 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const { username } = await params;
-	const userData = await getUserData(username);
 
-	if (!userData) {
+	try {
+		const userData = await getUserData(username);
+
+		return {
+			title: `${userData.displayName || userData.username} | EagleLink`,
+			description: userData.bio || `${userData.displayName || userData.username}'s profile on EagleLink`,
+			icons: userData.avatar,
+			openGraph: {
+				images: [userData.avatar],
+				title: userData.displayName || userData.username,
+				description:
+					userData.bio || `Check out ${userData.displayName || userData.username}'s profile on EagleLink`,
+				type: 'profile',
+			},
+		};
+	} catch {
 		return {
 			title: 'User Not Found | EagleLink',
 			description: 'The requested profile could not be found',
 		};
 	}
-
-	return {
-		title: `${userData.displayName || userData.username} | EagleLink`,
-		description: userData.bio || `${userData.displayName || userData.username}'s profile on EagleLink`,
-		icons: userData.avatar,
-		openGraph: {
-			images: [userData.avatar],
-			title: userData.displayName || userData.username,
-			description:
-				userData.bio || `Check out ${userData.displayName || userData.username}'s profile on EagleLink`,
-			type: 'profile',
-		},
-	};
 }
 
 export default async function UserPage({ params }: Props) {
 	const { username } = await params;
 	const userData = await getUserData(username);
-
-	if (!userData) {
-		notFound();
-	}
 
 	return (
 		<ThemeAwareProfile userData={userData}>
