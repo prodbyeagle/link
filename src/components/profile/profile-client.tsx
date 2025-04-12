@@ -37,7 +37,7 @@ export function UserProfileClient({ userData, initialBorderColor, userInitials }
 
 	if (!mounted) {
 		return (
-			<div className="flex flex-col items-center mb-8 animate-pulse">
+			<div className="flex flex-col items-center mb-8">
 				<div className="w-36 h-36 rounded-lg bg-muted mb-4"></div>
 				<div className="h-6 bg-muted rounded w-40 mb-2"></div>
 				<div className="h-4 bg-muted rounded w-64"></div>
@@ -46,12 +46,10 @@ export function UserProfileClient({ userData, initialBorderColor, userInitials }
 	}
 
 	return (
-		<div className="flex flex-col items-center mb-8 animate-in fade-in-50 duration-700 slide-in-from-top-4">
+		<div className="flex flex-col items-center mb-8">
 			<ProfileAvatar userData={userData} borderColor={borderColor} userInitials={userInitials} />
-			<h1 className="text-2xl font-bold mb-2 animate-in fade-in-0 duration-500 slide-in-from-top-2">
-				{userData.displayName}
-			</h1>
-			<p className="text-center max-w-md animate-in fade-in-0 duration-500 slide-in-from-top-1">{userData.bio}</p>
+			<h1 className="text-2xl font-bold mb-2">{userData.displayName}</h1>
+			<p className="text-center max-w-md">{userData.bio}</p>
 		</div>
 	);
 }
