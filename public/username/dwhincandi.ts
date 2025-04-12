@@ -1,6 +1,10 @@
 import type { Profile } from '@/types';
 
-const userProfile: Profile = {
+
+
+
+
+export const userProfile: Profile = {
 	username: 'dwhincandi',
 	displayName: 'DWHIncAndi',
 	bio: 'I am 18 years old, living in Romania. My nationality is Hungarian 🇭🇺 and Romanian 🇷🇴.',
@@ -33,19 +37,17 @@ const userProfile: Profile = {
 	],
 	theme: {
 		light: {
-			background: '#3A2B27',
-			secondary: '#4C3833',
-			text: '#d6b1a3',
-			accent: '#8F6A54',
+			background: '#967969',
+			secondary: '#c3a595',
+			text: '#2E1A12',
+			accent: '#5E3A22',
 		},
 		dark: {
-			background: '#1E1A21',
-			secondary: '#2F2A36',
-			text: '#E8D5CA',
-			accent: '#C09B7E',
+			background: '#1a0d07',
+			secondary: '#4d3329',
+			text: '#F4E7DD',
+			accent: '#C08B65',
 		},
 		respectSystemTheme: true,
 	},
 };
-
-export default userProfile;
