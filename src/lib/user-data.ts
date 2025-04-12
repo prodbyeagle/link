@@ -5,8 +5,8 @@ import { Profile } from '@/types';
 
 export async function getUserData(username: string): Promise<Profile | null> {
 	try {
-		const userModule = await import(`../../public/username/${username}`);
-		return userModule.default as Profile;
+		const { userProfile } = await import(`../../public/username/${username}`);
+		return userProfile as Profile;
 	} catch (error) {
 		console.error(`Error fetching user data for ${username}:`, error);
 		return null;
