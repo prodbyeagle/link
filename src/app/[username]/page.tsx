@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { getUserData } from '@/lib/api/user-service';
+import { getUserData } from '@/lib/user-service';
 
 import LinkList from '@/components/link-list';
 import ThemeAwareProfile from '@/components/theme-aware-profile';
