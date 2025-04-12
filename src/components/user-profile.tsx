@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 
 import { useTheme } from 'next-themes';
 
-import { hexToRgba } from '@/lib/color';
+import { hexToRgba } from '@/lib/utils';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import AvatarDialog from '@/components/avatar-dialog';
 
 import type { Profile } from '@/types';
 
@@ -20,12 +20,6 @@ export default function UserProfile({ userData }: UserProfileProps) {
 	const [borderColor, setBorderColor] = useState(
 		userData.theme.light.accent ? hexToRgba(userData.theme.light.accent, 0.4) : 'rgba(255, 255, 255, 0.5)',
 	);
-
-	const initials = userData.displayName
-		.split(' ')
-		.map((name) => name[0])
-		.join('')
-		.toUpperCase();
 
 	useEffect(() => {
 		setMounted(true);
@@ -53,12 +47,7 @@ export default function UserProfile({ userData }: UserProfileProps) {
 
 	return (
 		<div className="flex flex-col items-center mb-8 animate-in fade-in-50 duration-700 slide-in-from-top-4">
-			<Avatar
-				style={{ borderColor }}
-				className="w-36 h-36 mb-4 rounded-lg border shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105">
-				<AvatarImage src={userData.avatar} alt={userData.displayName} />
-				<AvatarFallback className="bg-muted text-foreground">{initials}</AvatarFallback>
-			</Avatar>
+			<AvatarDialog userData={userData} borderColor={borderColor} />
 			<h1 className="text-2xl font-bold mb-2 animate-in fade-in-0 duration-500 slide-in-from-top-2">
 				{userData.displayName}
 			</h1>
