@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { getUsernames } from '@/lib/api/user-service';
+import { getUsernames } from '@/lib/user-service';
 
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
