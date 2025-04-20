@@ -33,16 +33,16 @@ export const userProfile: Profile = {
 	],
 	theme: {
 		light: {
-			background: '#967969',
-			secondary: '#c3a595',
-			text: '#2E1A12',
-			accent: '#5E3A22',
+			background: '#f3e9e4',
+			secondary: '#e4d0c6',
+			text: '#2e1a12',
+			accent: '#8c5e3c',
 		},
 		dark: {
 			background: '#1a0d07',
-			secondary: '#4d3329',
-			text: '#F4E7DD',
-			accent: '#C08B65',
+			secondary: '#33211a',
+			text: '#f5ece7',
+			accent: '#c08b65',
 		},
 		respectSystemTheme: true,
 	},
