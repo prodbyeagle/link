@@ -78,15 +78,7 @@ export default function LinkList({
 				textColor: textColor || '#ffffff',
 			});
 		}
-	}, [
-		theme,
-		accentColor,
-		secondaryColor,
-		textColor,
-		darkAccentColor,
-		darkSecondaryColor,
-		darkTextColor,
-	]);
+	}, [theme, accentColor, secondaryColor, textColor, darkAccentColor, darkSecondaryColor, darkTextColor]);
 
 	if (!mounted) {
 		return (
@@ -106,7 +98,7 @@ export default function LinkList({
 				return (
 					<a key={index} href={link.url} target="_blank" rel="noopener noreferrer" className="block w-full">
 						<Card
-							className="w-full hover:shadow-xl hover:translate-y-[-2px] active:translate-y-[1px] transition-all duration-300"
+							className="w-full hover:scale-105 transition-transform duration-200 ease-in-out"
 							style={{
 								borderColor: currentColors.borderColor,
 								backgroundColor: currentColors.secondaryColor,
