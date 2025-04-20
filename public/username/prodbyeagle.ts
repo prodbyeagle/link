@@ -38,6 +38,5 @@ export const userProfile: Profile = {
 			text: '#f3e8ff',
 			accent: '#c084fc',
 		},
-		respectSystemTheme: true,
 	},
 };

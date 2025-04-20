@@ -26,7 +26,6 @@ interface ThemeColors {
 interface ProfileTheme {
 	light: ThemeColors;
 	dark: ThemeColors;
-	respectSystemTheme: boolean;
 }
 
 export interface Profile {

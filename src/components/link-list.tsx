@@ -31,7 +31,6 @@ interface LinkListProps {
 	darkTextColor?: string;
 	darkSecondaryColor?: string;
 	darkAccentColor?: string;
-	respectSystemTheme?: boolean;
 }
 
 const iconMap: Record<SocialPlatform, Icon> = {
@@ -54,7 +53,6 @@ export default function LinkList({
 	darkSecondaryColor,
 	darkTextColor,
 	darkAccentColor,
-	respectSystemTheme = true,
 }: LinkListProps) {
 	const { theme } = useTheme();
 	const [mounted, setMounted] = useState(false);
@@ -66,10 +64,6 @@ export default function LinkList({
 
 	useEffect(() => {
 		setMounted(true);
-
-		if (!respectSystemTheme) {
-			return;
-		}
 
 		if (theme === 'dark' && darkAccentColor && darkSecondaryColor && darkTextColor) {
 			setCurrentColors({
@@ -92,7 +86,6 @@ export default function LinkList({
 		darkAccentColor,
 		darkSecondaryColor,
 		darkTextColor,
-		respectSystemTheme,
 	]);
 
 	if (!mounted) {

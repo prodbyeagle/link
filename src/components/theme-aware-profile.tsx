@@ -24,10 +24,6 @@ export default function ThemeAwareProfile({ userData, children }: ThemeAwareProf
 	useEffect(() => {
 		setMounted(true);
 
-		if (!userData.theme.respectSystemTheme) {
-			return;
-		}
-
 		if (theme === 'dark') {
 			setThemeColors({
 				backgroundColor: userData.theme.dark.background || '#000000',

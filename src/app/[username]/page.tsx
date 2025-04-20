@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 
 import { getUserData } from '@/lib/user-service';
+import { cn } from '@/lib/utils';
 
 import LinkList from '@/components/link-list';
+import { ProfileAvatar } from '@/components/profile/profile-avatar';
 import ThemeAwareProfile from '@/components/theme-aware-profile';
 import { ThemeToggle } from '@/components/theme-toggle';
-import UserProfile from '@/components/user-profile';
 
 type Params = {
 	username: string;
@@ -51,8 +52,9 @@ export default async function UserPage({ params }: Props) {
 				<ThemeToggle />
 			</div>
 
-			<div className="w-full max-w-md space-y-6">
-				<UserProfile userData={userData} />
+			<section className={cn('w-full max-w-lg mx-auto px-4', 'flex flex-col gap-8')}>
+				<ProfileAvatar userData={userData} />
+
 				<LinkList
 					links={userData.links}
 					textColor={userData.theme.light.text}
@@ -63,9 +65,8 @@ export default async function UserPage({ params }: Props) {
 					darkSecondaryColor={userData.theme.dark.secondary}
 					darkBackgroundColor={userData.theme.dark.background}
 					darkAccentColor={userData.theme.dark.accent}
-					respectSystemTheme={userData.theme.respectSystemTheme}
 				/>
-			</div>
+			</section>
 		</ThemeAwareProfile>
 	);
 }
