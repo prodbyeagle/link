@@ -3,7 +3,7 @@ import type { Profile } from '@/types';
 export const userProfile: Profile = {
 	username: 'prodbyeagle',
 	displayName: 'ProdbyEagle',
-	bio: 'Hobby Frontend Developer from Germany 🇩🇪',
+	bio: 'Hobby Frontend Developer from Germany. Creator of this Website you are currently on!',
 	avatar: 'https://kappa.lol/zTb0g',
 	links: [
 		{
