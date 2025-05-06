@@ -3,7 +3,7 @@ import type { Profile } from '@/types';
 export const userProfile: Profile = {
 	username: 'dwhincandi',
 	displayName: 'DWHIncAndi',
-	bio: 'I am 18 years old, living in Romania. My nationality is Hungarian 🇭🇺 and Romanian 🇷🇴.',
+	bio: 'I am 18 years old, living in Romania. My nationality is Hungarian and Romanian.',
 	avatar: 'https://kappa.lol/L3tbR',
 	links: [
 		{
