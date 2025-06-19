@@ -4,7 +4,7 @@ export const userProfile: Profile = {
 	username: 'prodbyeagle',
 	displayName: 'ProdbyEagle',
 	bio: 'Hobby Frontend Developer from Germany. Creator of this Website you are currently on!',
-	avatar: 'https://kappa.lol/zTb0g',
+	avatar: 'https://avatars.githubusercontent.com/u/124641014',
 	links: [
 		{
 			icon: 'Website',
